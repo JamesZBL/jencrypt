@@ -89,16 +89,20 @@ def on_change(event):
 
 # Print banner
 def print_banner():
-    print("    _                                                _   ")
-    print("   (_)   ___   _ __     ___   _ __   _   _   _ __   | |_ ")
-    print("   | |  / _ \ | '_ \   / __| | '__| | | | | | '_ \  | __|")
-    print("   | | |  __/ | | | | | (__  | |    | |_| | | |_) | | |_ ")
-    print("  _/ |  \___| |_| |_|  \___| |_|     \__, | | .__/   \__|")
-    print(" |__/                                |___/  |_|          ")
-    print("                                                         ")
-    print("  v2.0                                                   ")
-    print("                                                         ")
-    print("                                                         ")
+    print(
+        '''
+    _                                                _   
+   (_)   ___   _ __     ___   _ __   _   _   _ __   | |_ 
+   | |  / _ \ | '_ \   / __| | '__| | | | | | '_ \  | __|
+   | | |  __/ | | | | | (__  | |    | |_| | | |_) | | |_ 
+  _/ |  \___| |_| |_|  \___| |_|     \__, | | .__/   \__|
+ |__/                                |___/  |_|   
+ 
+ v2.0
+ 
+ 
+        '''
+    )
 
 
 # Main
@@ -129,7 +133,7 @@ def mount_volume():
     print(cmd_get_tmp_dir)
 
     global disk_id
-    disk_id = os.popen(cmd_get_tmp_dir).read()
+    disk_id = os.popen(cmd_get_tmp_dir).read().strip()
 
     global tmp_dir
     tmp_dir = os.path.join(tempfile.gettempdir(), random_hex())
