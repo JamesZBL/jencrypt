@@ -219,7 +219,7 @@ if __name__ == '__main__':
             '''
         )
 
-        result = input("What do you want? \n")
+        result = input("What do you want? \n").strip()
 
         if "0" == result:
             print("Jencrypt exit now. ")
