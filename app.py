@@ -12,6 +12,7 @@ import shutil
 import sys
 import tempfile
 from datetime import datetime
+from getpass import getpass
 from hashlib import md5
 from time import sleep
 
@@ -75,8 +76,9 @@ if __name__ == '__main__':
 
     print_banner()
 
-    # fixme password should not be shown
-    cipher = input("Input your cipher for encryption:\n")
+    # get password from terminal input
+
+    cipher = getpass("Input your password for encryption:\n")
 
     home_dir = os.getenv("HOME")
     enc_file = f'{home_dir}/jencrypt_encrypted_v2.enc'
@@ -140,7 +142,12 @@ if __name__ == '__main__':
         while True:
             sleep(1)
     except KeyboardInterrupt:
+        print("\nEncrypting and cleaning temporary file. ")
+
         observer.stop()
         observer.join()
+
         # clean up tmp dir
         clean_up()
+
+        print("Jencrypt exit now. ")
