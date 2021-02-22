@@ -69,11 +69,19 @@ def on_change(event):
         clean_up()
         sys.exit(-1)
 
-    print(f"Hey, {event.src_path} has changed!")
+    print(f"[INFO] {event.src_path} has changed!")
+
     # package and encrypt file and override enc file
     # todo ignore .fseventsd & .DS_Store
-    # fixme file or dir name contains space, tar will no work
-    cmd_package = f'cd {ram_disk_dir} && tar -cf {plain_file} $(ls {ram_disk_dir})'
+    filename_list = os.listdir(ram_disk_dir)
+
+    filenames = []
+    for filename in filename_list:
+        filenames.append(f'"{filename}"')
+
+    files_string = ' '.join(filenames)
+
+    cmd_package = f'cd {ram_disk_dir} && tar -cf {plain_file} {files_string}'
     print(os.popen(cmd_package).read())
     cmd_encrypt = f'echo "{cipher}" | openssl aes-256-cbc -a -salt -in "{plain_file}" -out "{enc_file}" -pass stdin'
     print(os.popen(cmd_encrypt).read())
@@ -137,6 +145,7 @@ def mount_volume():
     # if find encrypted file, decrypt and extract it to tmp dir
     if os.path.exists(enc_file) and os.path.isfile(enc_file):
         print("Encrypted file exists, decrypt and extract")
+        # todo when cipher error, show warning
         cmd_decrypt = f'echo "{cipher}" | openssl aes-256-cbc -d -a -in {enc_file} -out {plain_file} -pass stdin'
         print(os.popen(cmd_decrypt).read())
         cmd_extract = f'tar -xf {plain_file} -C {ram_disk_dir}'
@@ -185,8 +194,11 @@ def mount_volume():
 def wipe_encrypted_data():
     wipe = input("Delete all encrypted data. This operation is irreversible! Are you sure? [y/n] \n")
     if "y" == wipe:
-        os.remove(enc_file)
-        print("Successfully removed all encrypted data. ")
+        if os.path.exists(enc_file):
+            os.remove(enc_file)
+            print("Successfully removed all encrypted data. ")
+        else:
+            print("Encrypted file does not exist. ")
     else:
         print("Operation canceled. ")
 
