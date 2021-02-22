@@ -19,7 +19,14 @@ from time import sleep
 from watchdog.events import PatternMatchingEventHandler
 from watchdog.observers import Observer
 
-observer = None
+observer: Observer
+tmp_dir = ''
+disk_id = ''
+ram_disk_dir = ''
+plain_file = ''
+cipher = ''
+enc_file = ''
+unmounted = False
 
 
 # Clean up
@@ -27,12 +34,16 @@ def clean_up():
     if os.path.isdir(tmp_dir):
         shutil.rmtree(tmp_dir)
 
+    global observer
     if observer is not None:
         observer.stop()
         observer.join()
 
-    cmd_eject = f'diskutil eject /dev/{disk_id}'
-    print(os.popen(cmd_eject).read())
+    disk_dev = f'/dev/{disk_id}'
+
+    if os.path.exists(disk_dev):
+        cmd_eject = f'diskutil eject {disk_dev}'
+        print(os.popen(cmd_eject).read())
 
 
 # Generate random hex string
@@ -42,6 +53,17 @@ def random_hex():
 
 # Do on ram disk volume file system has any change
 def on_change(event):
+    global unmounted
+
+    if not os.path.exists(ram_disk_dir):
+        if not unmounted:
+            print("Volume unmounted.")
+            unmounted = True
+            return
+
+    if unmounted:
+        return
+
     if len(ram_disk_dir) < 1 or len(plain_file) < 1:
         print("[ERROR] Directory not initialized")
         clean_up()
@@ -72,16 +94,11 @@ def print_banner():
 
 
 # Main
-if __name__ == '__main__':
-
-    print_banner()
-
+def mount_volume():
     # get password from terminal input
 
+    global cipher
     cipher = getpass("Input your password for encryption:\n")
-
-    home_dir = os.getenv("HOME")
-    enc_file = f'{home_dir}/jencrypt_encrypted_v2.enc'
 
     # create RAM disk and mount
 
@@ -92,8 +109,9 @@ if __name__ == '__main__':
     print(cmd_create_tam_disk)
     print(os.popen(cmd_create_tam_disk).read())
 
+    global ram_disk_dir
     ram_disk_dir = f'/Volumes/{disk_name}'
-    print(f'RAM disk is at {disk_name}')
+    print(f'RAM disk is at {ram_disk_dir}')
 
     print("RAM disk mounted")
 
@@ -101,8 +119,11 @@ if __name__ == '__main__':
 
     cmd_get_tmp_dir = "diskutil list | grep %s | awk '{print $5}'" % disk_name
     print(cmd_get_tmp_dir)
+
+    global disk_id
     disk_id = os.popen(cmd_get_tmp_dir).read()
 
+    global tmp_dir
     tmp_dir = os.path.join(tempfile.gettempdir(), random_hex())
 
     if not os.path.exists(tmp_dir):
@@ -110,6 +131,7 @@ if __name__ == '__main__':
 
     print(f'Temp dir is {tmp_dir}')
 
+    global plain_file
     plain_file = os.path.join(tmp_dir, 'jencrypt-decrypted.tar.gz')
 
     # if find encrypted file, decrypt and extract it to tmp dir
@@ -132,6 +154,7 @@ if __name__ == '__main__':
     watch_handler.on_modified = on_change
     watch_handler.on_moved = on_change
 
+    global observer
     observer = Observer()
     observer.schedule(watch_handler, ram_disk_dir, recursive=True)
     observer.start()
@@ -141,6 +164,11 @@ if __name__ == '__main__':
     try:
         while True:
             sleep(1)
+            if unmounted:
+                clean_up()
+                print("Jencrypt exit now. ")
+                sys.exit(0)
+
     except KeyboardInterrupt:
         print("\nEncrypting and cleaning temporary file. ")
 
@@ -151,3 +179,60 @@ if __name__ == '__main__':
         clean_up()
 
         print("Jencrypt exit now. ")
+
+
+# Wipe all data (dangerous)
+def wipe_encrypted_data():
+    wipe = input("Delete all encrypted data. This operation is irreversible! Are you sure? [y/n] \n")
+    if "y" == wipe:
+        os.remove(enc_file)
+        print("Successfully removed all encrypted data. ")
+    else:
+        print("Operation canceled. ")
+
+
+# Show status
+def show_status():
+    global enc_file
+    exists = os.path.exists(enc_file)
+    if exists:
+        print("Encrypted file exists. ")
+    else:
+        print("Encrypted file does not exist. ")
+
+
+if __name__ == '__main__':
+    print_banner()
+
+    home_dir = os.getenv("HOME")
+    enc_file = f'{home_dir}/jencrypt_encrypted_v2.enc'
+
+    while True:
+        sleep(0.5)
+
+        print(
+            ''' 
+0. Exit
+1. Mount private volume (default)
+2. Wipe encrypted data
+3. Show status"
+            '''
+        )
+
+        result = input("What do you want? \n")
+
+        if "0" == result:
+            print("Jencrypt exit now. ")
+            break
+        elif "1" == result:
+            mount_volume()
+            break
+        elif "2" == result:
+            wipe_encrypted_data()
+            break
+        elif "3" == result:
+            show_status()
+            break
+        else:
+            print("[ERROR] Invalid number! ")
+            sleep(0.5)
