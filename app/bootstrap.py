@@ -98,7 +98,7 @@ def print_banner():
   _/ |  \___| |_| |_|  \___| |_|     \__, | | .__/   \__|
  |__/                                |___/  |_|          
 
- v2.0
+ v2.0.7
         '''
     )
 
@@ -112,7 +112,7 @@ def mount_volume():
 
     # create RAM disk and mount
 
-    disk_name = random_hex()
+    disk_name = f'jencrypt-{random_hex()[0:10]}'
     print(f'Create RAM disk {disk_name}')
 
     cmd_create_tam_disk = f'diskutil erasevolume HFS+ {disk_name} `hdiutil attach -nobrowse -nomount ram://8192`'
