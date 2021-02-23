@@ -4,13 +4,13 @@ File and directory encryption application with auto-mount volume for macOS.
 
 ## Installation
 
-```shell script
-$ brew install jameszbl/jencrypt/jencrypt
+```bash
+$ brew install JamesZBL/jencrypt/jencrypt
 ```
 
 ## Usage
 
-```shell script
+```bash
 $ jencrypt
 ```
 
