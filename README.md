@@ -1,6 +1,6 @@
 # jencrypt
 
-File and directory encryption application with auto-mount volume. 
+File and directory encryption application with auto-mount volume for macOS. 
 
 ## Installation
 
