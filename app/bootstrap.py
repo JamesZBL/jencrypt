@@ -215,10 +215,11 @@ def show_status():
         print("Encrypted file does not exist. ")
 
 
-if __name__ == '__main__':
+def main():
     print_banner()
 
     home_dir = os.getenv("HOME")
+    global enc_file
     enc_file = f'{home_dir}/jencrypt_encrypted_v2.enc'
 
     while True:
@@ -250,3 +251,7 @@ if __name__ == '__main__':
         else:
             print("[ERROR] Invalid number! ")
             sleep(0.5)
+
+
+if __name__ == '__main__':
+    sys.exit(main())
