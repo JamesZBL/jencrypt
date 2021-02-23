@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(name='jencrypt',
       version='2.0.2',
@@ -8,5 +8,6 @@ setup(name='jencrypt',
       author='JamesZBL',
       author_email='zhengbaole@gmail.com',
       url='https://github.com/JamesZBL/jencrypt',
-      packages=['watchdog'],
+      packages=find_packages(),
+      python_requires='>=3',
       )
