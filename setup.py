@@ -12,7 +12,7 @@ setup(name='jencrypt',
       python_requires='>=3',
       entry_points={
           'console_scripts': [
-              'jencrypt = app'
+              'jencrypt = app.bootstrap:main'
           ]
       },
       )
