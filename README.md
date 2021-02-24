@@ -11,7 +11,9 @@
 
 File and directory encryption application with auto-mount volume for macOS. 
 
-## Installation
+
+Installation
+--------
 
 ```bash
 $ brew install JamesZBL/jencrypt/jencrypt
@@ -20,14 +22,16 @@ $ brew install JamesZBL/jencrypt/jencrypt
 If you don't have ``homebrew`` installed, see [here](https://brew.sh)
 
 
-## Usage
+Usage
+--------
 
 ```bash
 $ jencrypt
 ```
 
 
-## Functions
+Functions
+--------
 
 ```
 0. Exit.
@@ -36,7 +40,9 @@ $ jencrypt
 3. Show status.
 ```
 
-## Example
+
+Example
+--------
 
 After successfully installed ``jencrypt``, you should execute the ``jencrypt`` command in Terminal 
  or 3rd party terminal, eg: iTerm2.
@@ -54,3 +60,29 @@ After typing password, press ``Enter``. Open ``Finder.app``. You will see a new 
 When you don't need edit or view these private files anymore, press ``ctrl-C`` to exit ``jencrypt``.
 The encrypted volume will be ejected automatically. Or, you can eject the private volume manually, after that
 , ``jencrypt`` will also exit automatically.
+
+
+Dependencies
+------------
+
+* Python 3
+* [Watchdog](https://github.com/gorakhargosh/watchdog)
+* openssl
+* tar
+* diskutil
+
+
+Licensing
+---------
+
+Jencrypt is licensed under the terms of the [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+Copyright 2021 [JamesZBL](https://github.com/JamesZBL).
+
+
+Why Jencrypt?
+------------
+
+* AES-256 encryption
+* Auto mount encryption volume
+* Auto detect and re-encrypt
