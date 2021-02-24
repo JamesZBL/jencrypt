@@ -1,16 +1,19 @@
 # jencrypt
 
-File and directory encryption application with auto-mount volume. 
+File and directory encryption application with auto-mount volume for macOS. 
 
 ## Installation
 
-```shell script
-$ brew install jameszbl/jencrypt/jencrypt
+```bash
+$ brew install JamesZBL/jencrypt/jencrypt
 ```
+
+If you dont' have ``homebrew`` installed, see [here](https://brew.sh)
+
 
 ## Usage
 
-```shell script
+```bash
 $ jencrypt
 ```
 
@@ -33,7 +36,7 @@ It'll show function list.
 
 Select 1.
 
-Input your password for encryption. It's now allowed to change password in current version.
+Input your password for encryption. It's not allowed to change password in current version.
 Please input carefully.
 
 After typing password, press ``Enter``. Open ``Finder.app``. You will see a new volume named
