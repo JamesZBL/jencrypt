@@ -1,5 +1,7 @@
-# jencrypt
 
+![logo](logo.png)
+
+# jencrypt
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/jameszbl/jencrypt?label=RELEASE&style=flat-square&logo=github)
 ![Python version](https://img.shields.io/badge/python-%3E%3D3-green?style=flat-square&logo=python)
