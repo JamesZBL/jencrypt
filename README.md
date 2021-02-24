@@ -36,7 +36,7 @@ It'll show function list.
 
 Select 1.
 
-Input your password for encryption. It's now allowed to change password in current version.
+Input your password for encryption. It's not allowed to change password in current version.
 Please input carefully.
 
 After typing password, press ``Enter``. Open ``Finder.app``. You will see a new volume named
