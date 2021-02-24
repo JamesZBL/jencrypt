@@ -80,7 +80,7 @@ Jencrypt is licensed under the terms of the [Apache License, version 2.0](http:/
 Copyright 2021 [JamesZBL](https://github.com/JamesZBL).
 
 
-Why Jencrypt?
+Why jencrypt?
 ------------
 
 * AES-256 encryption
