@@ -69,10 +69,10 @@ def on_change(event):
         clean_up()
         sys.exit(-1)
 
-    if event.src_path.split('/')[-1] in ['.DS_Store', '.fseventsd']:
+    if event.src_path.split('/')[-1] in ['.DS_Store', '.fseventsd', '.Trashes']:
         return
 
-    print(f"[INFO] {event.src_path} has changed! ")
+    # print(f"[INFO] {event.src_path} has changed! ")
 
     # package and encrypt file and override enc file
     filename_list = os.listdir(ram_disk_dir)
@@ -100,7 +100,7 @@ def print_banner():
   _/ |  \___| |_| |_|  \___| |_|     \__, | | .__/   \__|
  |__/                                |___/  |_|          
 
- v2.0.7
+ v2.0.8
         '''
     )
 
