@@ -9,6 +9,7 @@
 
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 from datetime import datetime
@@ -101,7 +102,7 @@ def print_banner():
   _/ |  \___| |_| |_|  \___| |_|     \__, | | .__/   \__|
  |__/                                |___/  |_|          
 
- v2.0.9
+ v2.0.10
         '''
     )
 
@@ -235,8 +236,31 @@ def show_status():
         print("Encrypted file does not exist. ")
 
 
+# Assert all needed program installed
+def assert_cmd_exists():
+    cmd_list = [
+        ['tar', '-h'],
+        ['openssl', '-h'],
+        ['diskutil', 'list']
+    ]
+
+    error_exists = False
+
+    for cmd in cmd_list:
+        p = subprocess.Popen(cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+        p.communicate()
+        if 0 != p.returncode:
+            error_exists = True
+            print(f'[ERROR] {cmd[0]} is not installed. ')
+
+    if error_exists:
+        sys.exit(-1)
+
+
 def main():
     print_banner()
+
+    assert_cmd_exists()
 
     home_dir = os.getenv("HOME")
     global enc_file
