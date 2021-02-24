@@ -1,5 +1,5 @@
 
-<div style="text-align:center"><img src="logo.png" /></div>
+<span style="display:block;text-align:center">![logo](logo.png)</span>
 
 # jencrypt
 
