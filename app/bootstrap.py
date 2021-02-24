@@ -84,9 +84,10 @@ def on_change(event):
     files_string = ' '.join(filenames)
 
     cmd_package = f'cd {ram_disk_dir} && tar -cf {plain_file} {files_string}'
-    print(os.popen(cmd_package).read())
+    os.popen(cmd_package).read()
+
     cmd_encrypt = f'echo "{cipher}" | openssl aes-256-cbc -a -salt -in "{plain_file}" -out "{enc_file}" -pass stdin'
-    print(os.popen(cmd_encrypt).read())
+    os.popen(cmd_encrypt).read()
 
 
 # Print banner
@@ -109,8 +110,16 @@ def print_banner():
 def mount_volume():
     # get password from terminal input
 
+    enc_file_exists = os.path.exists(enc_file) and os.path.isfile(enc_file)
+
     global cipher
     cipher = getpass("Input your password for encryption:\n")
+
+    if not enc_file_exists:
+        cipher_confirm = getpass("Input your password again:\n")
+        if cipher != cipher_confirm:
+            print("Passwords are different! ")
+            sys.exit(-1)
 
     # create RAM disk and mount
 
@@ -147,7 +156,7 @@ def mount_volume():
     plain_file = os.path.join(tmp_dir, 'jencrypt-decrypted.tar.gz')
 
     # if find encrypted file, decrypt and extract it to tmp dir
-    if os.path.exists(enc_file) and os.path.isfile(enc_file):
+    if enc_file_exists:
 
         print("Encrypted file exists, decrypt and extract")
 
