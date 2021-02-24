@@ -57,7 +57,7 @@ def on_change(event):
 
     if not os.path.exists(ram_disk_dir):
         if not unmounted:
-            print("Volume unmounted.")
+            print("Volume was ejected.")
             unmounted = True
             return
 
@@ -65,14 +65,16 @@ def on_change(event):
         return
 
     if len(ram_disk_dir) < 1 or len(plain_file) < 1:
-        print("[ERROR] Directory not initialized")
+        print("[ERROR] Directory not initialized. ")
         clean_up()
         sys.exit(-1)
 
-    print(f"[INFO] {event.src_path} has changed!")
+    if event.src_path.split('/')[-1] in ['.DS_Store', '.fseventsd']:
+        return
+
+    print(f"[INFO] {event.src_path} has changed! ")
 
     # package and encrypt file and override enc file
-    # todo ignore .fseventsd & .DS_Store
     filename_list = os.listdir(ram_disk_dir)
 
     filenames = []
@@ -146,11 +148,20 @@ def mount_volume():
 
     # if find encrypted file, decrypt and extract it to tmp dir
     if os.path.exists(enc_file) and os.path.isfile(enc_file):
+
         print("Encrypted file exists, decrypt and extract")
+
         # todo when cipher error, show warning
         cmd_decrypt = f'echo "{cipher}" | openssl aes-256-cbc -d -a -in {enc_file} -out {plain_file} -pass stdin'
+
         print(os.popen(cmd_decrypt).read())
+
         cmd_extract = f'tar -xf {plain_file} -C {ram_disk_dir}'
+
+        if not os.path.exists(plain_file):
+            print("[ERROR] Decryption failed, check your password. ")
+            sys.exit(-1)
+
         print(os.popen(cmd_extract).read())
 
     # watch ram disk volume change and handle event
