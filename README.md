@@ -4,11 +4,12 @@ File and directory encryption application with auto-mount volume for macOS.
 
 ## Installation
 
-If you dont' have ``homebrew`` installed, see [here](https://brew.sh)
-
 ```bash
 $ brew install JamesZBL/jencrypt/jencrypt
 ```
+
+If you dont' have ``homebrew`` installed, see [here](https://brew.sh)
+
 
 ## Usage
 
