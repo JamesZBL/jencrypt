@@ -1,5 +1,5 @@
 [build-system]
-requires = ["flit_core >=2,<4", "watchdog 2.0.2"]
+requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
@@ -9,6 +9,7 @@ author-email = "zhengbaole@gmail.com"
 home-page = "https://github.com/JamesZBL/jencrypt"
 classifiers = ["License :: OSI Approved :: Apache Software License"]
 description-file = "README.md"
+requires = ["watchdog"]
 
 [tool.flit.scripts]
 jencrypt = "jencrypt.bootstrap:main"
