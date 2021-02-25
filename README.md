@@ -83,6 +83,9 @@ Copyright 2021 [JamesZBL](https://github.com/JamesZBL).
 Why jencrypt?
 ------------
 
-* AES-256 encryption
-* Auto mount encryption volume
-* Auto detect and re-encrypt
+* Reliable encryption
+* Fully automated encrypted volume
+* Automatically detect changes and re-encrypt
+* Password secondary verification
+* Fast RAM disk, private data isn't kept on disk
+* Easy to use
