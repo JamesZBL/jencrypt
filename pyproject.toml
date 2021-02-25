@@ -9,3 +9,6 @@ author-email = "zhengbaole@gmail.com"
 home-page = "https://github.com/JamesZBL/jencrypt"
 classifiers = ["License :: OSI Approved :: Apache Software License"]
 description-file = "README.md"
+
+[tool.flit.scripts]
+jencrypt = "jencrypt.bootstrap:main"
