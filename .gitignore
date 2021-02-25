@@ -36,3 +36,8 @@ fileTemplates
 *.key
 static/
 files/
+
+
+*/__pycache__
+*.egg-info
+dist/
