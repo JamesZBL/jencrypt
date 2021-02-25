@@ -10,7 +10,7 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 
 setup(name='jencrypt',
-      version='2.0.12',
+      version='2.0.13',
       description='File and directory encryption tool with automatically mounting data volumes',
       long_description=README,
       long_description_content_type="text/markdown",

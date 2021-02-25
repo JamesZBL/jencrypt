@@ -8,6 +8,7 @@
 #
 
 import os
+import platform
 import shutil
 import subprocess
 import sys
@@ -102,7 +103,7 @@ def print_banner():
   _/ |  \___| |_| |_|  \___| |_|     \__, | | .__/   \__|
  |__/                                |___/  |_|          
 
- v2.0.12
+ v2.0.13
         '''
     )
 
@@ -257,8 +258,16 @@ def assert_cmd_exists():
         sys.exit(-1)
 
 
+def assert_os_support():
+    if "Darwin" != platform.system():
+        print("[ERROR] This program can not run on this platform. It supports macOS only. ")
+        sys.exit(-1)
+
+
 def main():
     print_banner()
+
+    assert_os_support()
 
     assert_cmd_exists()
 
