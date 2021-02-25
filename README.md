@@ -7,7 +7,7 @@
 ![Python version](https://img.shields.io/badge/python-%3E%3D3-green?style=flat-square&logo=python)
 ![PyPI](https://img.shields.io/pypi/v/jencrypt?style=flat-square&logo=pypi)
 ![Platform](https://img.shields.io/badge/platform-macOS-lightgrey?style=flat-square&logo=macos)
-![GitHub](https://img.shields.io/github/license/jameszbl/jencrypt?color=orange&style=flat-square&logo=apache)
+![License](https://img.shields.io/github/license/jameszbl/jencrypt?color=orange&style=flat-square&logo=apache)
 
 
 File and directory encryption application with auto-mount volume for macOS. 
